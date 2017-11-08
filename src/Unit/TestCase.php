@@ -3,6 +3,7 @@
 namespace seregazhuk\React\PromiseTesting\Unit;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 use React\Promise\PromiseInterface;
 
 class TestCase extends PHPUnitTestCase
@@ -36,52 +37,58 @@ class TestCase extends PHPUnitTestCase
             $this->assertNull($error);
             $this->fail('promise resolved');
         });
-
         $promise->then(
             $this->assertCallableNeverCalled(),
             $this->assertCallableCalledOnceWithObjectOf($reasonExceptionClass)
         );
     }
 
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|callable
+     */
     public function assertCallableCalledOnce()
     {
-        $this->getMockBuilder(CallableStub::class)
-            ->getMock()
-            ->expects($this->once())
-            ->method('__invoke');
+        $mock = $this->getMockBuilder(CallableStub::class)->getMock();
+        $mock->expects($this->once())->method('__invoke');
+
+        return $mock;
     }
 
     /**
      * @param array $arguments
+     * @return PHPUnit_Framework_MockObject_MockObject|callable
      */
     public function assertCallableCalledOnceWithArgs(array $arguments = [])
     {
-        $this->getMockBuilder(CallableStub::class)
-            ->getMock()
-            ->expects($this->once())
-            ->method('__invoke')
-            ->with($arguments);
+        $mock = $this->getMockBuilder(CallableStub::class)->getMock();
+        $mock->expects($this->once())->method('__invoke')->with(...$arguments);
+
+        return $mock;
     }
 
     /**
      * @param string $class
+     * @return PHPUnit_Framework_MockObject_MockObject|callable
      */
     public function assertCallableCalledOnceWithObjectOf($class)
     {
-        $this->getMockBuilder(CallableStub::class)
-            ->getMock()
-            ->expects($this->once())
+        $mock = $this->getMockBuilder(CallableStub::class)->getMock();
+
+        $mock->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function($arg) use ($class) {
-                $this->assertInstanceOf($class, $arg);
-            }));
+            ->with($this->isInstanceOf($class));
+
+        return $mock;
     }
 
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject|callable
+     */
     public function assertCallableNeverCalled()
     {
-        $this->getMockBuilder(CallableStub::class)
-            ->getMock()
-            ->expects($this->never())
-            ->method('__invoke');
+        $mock = $this->getMockBuilder(CallableStub::class)->getMock();
+        $mock->expects($this->never())->method('__invoke');
+
+        return $mock;
     }
 }
