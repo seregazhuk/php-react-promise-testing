@@ -1,0 +1,29 @@
+{
+    "name": "seregazhuk/php-react-promise-testing",
+    "description": "PHPUnit-based library for testing ReactPHP promises",
+    "keywords": [
+        "Testing",
+        "ReactPHP",
+        "promise",
+        "test"
+    ],
+    "homepage": "https://github.com/seregazhuk/php-react-promise-testing",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Zhuk",
+            "email": "seregazhuk88@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "react/promise": "^2.5",
+        "phpunit/phpunit": "~5.0",
+        "clue/block-react": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "seregazhuk\\React\\PromiseTesting\\": "src/"
+        }
+    }
+}
