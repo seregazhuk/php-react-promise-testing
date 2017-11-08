@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\React\PromiseTesting\Unit;
+namespace seregazhuk\React\PromiseTesting;
 
 class CallableStub
 {
