@@ -8,6 +8,10 @@ use React\Promise\PromiseInterface;
 
 class TestCase extends PHPUnitTestCase
 {
+    /**
+     * @param PromiseInterface $promise
+     * @param mixed $value
+     */
     public function assertPromiseResolvesWith(PromiseInterface $promise, $value)
     {
         /** @var PromiseInterface $promise */
@@ -19,24 +23,32 @@ class TestCase extends PHPUnitTestCase
         $promise->then($this->assertCallableCalledOnceWithArgs([$value]), $this->assertCallableNeverCalled());
     }
 
+    /**
+     * @param PromiseInterface $promise
+     */
     public function assertPromiseResolves(PromiseInterface $promise)
     {
         /** @var PromiseInterface $promise */
         $promise->then(null, function($error) {
             $this->assertNull($error);
-            $this->fail('promise rejected');
+            $this->fail('Promise rejected');
         });
 
         $promise->then($this->assertCallableCalledOnce(), $this->assertCallableNeverCalled());
     }
 
+    /**
+     * @param PromiseInterface $promise
+     * @param string $reasonExceptionClass
+     */
     public function assertPromiseRejectsWith(PromiseInterface $promise, $reasonExceptionClass)
     {
         /** @var PromiseInterface $promise */
         $promise->then(null, function($error) {
             $this->assertNull($error);
-            $this->fail('promise resolved');
+            $this->fail('Promise resolved');
         });
+
         $promise->then(
             $this->assertCallableNeverCalled(),
             $this->assertCallableCalledOnceWithObjectOf($reasonExceptionClass)

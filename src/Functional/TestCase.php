@@ -44,7 +44,7 @@ class TestCase extends PHPUnitTestCase
             return $exception;
         }
 
-        $this->fail('Promise was resolved');
+        $this->fail('Promise resolved');
     }
 
     /**
