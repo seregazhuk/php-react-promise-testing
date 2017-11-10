@@ -4,8 +4,34 @@ A library that provides a set of convenient assertions for testing ReactPHP prom
 [![Build Status](https://travis-ci.org/seregazhuk/php-react-promise-testing.svg?branch=master)](https://travis-ci.org/seregazhuk/php-react-promise-testing)
 
 When testing asynchronous code and promises things can be a bit tricky. This library provides a set of convenient 
-assertions for testing ReactPHP promises. To start using it extend your test classes
- from `seregazhuk\React\PromiseTesting\TestCase` class, which itself extends PHPUnit `TestCase`:
+assertions for testing ReactPHP promises. 
+
+**Table of Contents**
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Assertions](#assertions)
+    - [assertPromiseResolves()](#assertpromiseresolves)
+    - [assertPromiseResolvesWith()](#assertpromiseresolveswith)
+    - [assertPromiseRejects()](#assertpromiserejects)
+    - [assertPromiseRejectsWith()](#assertpromiserejectswith)
+    
+## Installation
+
+### Dependencies
+Library requires PHP 5.6.0 or above.
+
+The recommended way to install this library is via [Composer](https://getcomposer.org). 
+[New to Composer?](https://getcomposer.org/doc/00-intro.md)
+
+See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
+
+```
+composer require seregazhuk/react-promise-testing
+```
+
+## Quick Start
+To start using it extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
+which itself extends PHPUnit `TestCase`:
  
 ```php
 class MyTest extends TestCase
@@ -30,10 +56,6 @@ class MyTest extends TestCase
 Test above checks that a specified promise resolves. If the promise was rejected this test fails.
 
 ## Assertions
- - [assertPromiseResolves()](#assertpromiseresolves)
- - [assertPromiseResolvesWith()](#assertpromiseresolveswith)
- - [assertPromiseRejects()](#assertpromiserejects)
- - [assertPromiseRejectsWith()](#assertpromiserejectswith)
 
 ### assertPromiseResolves()
 

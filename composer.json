@@ -1,5 +1,5 @@
 {
-    "name": "seregazhuk/php-react-promise-testing",
+    "name": "seregazhuk/react-promise-testing",
     "description": "PHPUnit-based library for testing ReactPHP promises",
     "keywords": [
         "Testing",
