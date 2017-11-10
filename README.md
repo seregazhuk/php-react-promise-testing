@@ -36,6 +36,7 @@ Test above checks that a specified promise resolves. If the promise was rejected
 ### assertPromiseResolves()
 
 `public function assertPromiseResolves(PromiseInterface $promise, $timeout = null)`
+
 The test fails if the `$promise` rejects. 
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
@@ -69,6 +70,7 @@ Failed asserting that promise resolves. Promise was rejected.
 
 ### assertPromiseResolvesWith()
 `assertPromiseResolvesWith(PromiseInterface $promise, $value, $timeout = null)`
+
 The test fails if the `$promise` doesn't resolve with a specified `$value`.
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
@@ -103,6 +105,7 @@ Failed asserting that 1234 matches expected 1.
 
 ### assertPromiseRejects()
 `assertPromiseRejects(PromiseInterface $promise, $timeout = null)`
+
 The test fails if the `$promise` resolves.
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
@@ -136,6 +139,7 @@ Failed asserting that promise rejects. Promise was resolved.
 
 ### assertPromiseRejectsWith()
 `assertPromiseRejectsWith(PromiseInterface $promise, $reasonExceptionClass, $timeout = null)`
+
 The test fails if the `$promise` doesn't reject with a specified exception class.
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
