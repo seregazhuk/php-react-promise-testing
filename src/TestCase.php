@@ -27,7 +27,6 @@ class TestCase extends PHPUnitTestCase
      * @param PromiseInterface $promise
      * @param int|null $timeout seconds to wait for resolving
      * @return mixed
-     * @throws Exception
      */
     public function assertPromiseResolves(PromiseInterface $promise, $timeout = null)
     {

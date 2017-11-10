@@ -47,7 +47,8 @@ class MyTest extends TestCase
             $reject(new \Exception('Promise cancelled!'));
         };
 
-        $this->assertPromiseResolves($deferred->promise());
+        $promise = new Promise($resolve, $cancel);
+        $this->assertPromiseResolves($promise);
     }
 }
 
