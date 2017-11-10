@@ -30,10 +30,10 @@ class MyTest extends TestCase
 Test above checks that a specified promise resolves. If the promise was rejected this test fails.
 
 ## Assertions
- - [assertPromiseResolves()](#assertpromiseresolves())
- - [assertPromiseResolvesWith](#assertpromiseresolveswith())
- - [assertPromiseRejects](#assertpromiserejects())
- - [assertPromiseRejectsWith](#assertpromiserejectswith())
+ - [assertPromiseResolves()](#assertpromiseresolves)
+ - [assertPromiseResolvesWith()](#assertpromiseresolveswith)
+ - [assertPromiseRejects()](#assertpromiserejects)
+ - [assertPromiseRejectsWith()](#assertpromiserejectswith)
 
 ### assertPromiseResolves()
 
