@@ -1,6 +1,8 @@
 # ReactPHP Promises Testing
 A library that provides a set of convenient assertions for testing ReactPHP promises. 
 
+[![Build Status](https://travis-ci.org/seregazhuk/php-react-promise-testing.svg?branch=master)](https://travis-ci.org/seregazhuk/php-react-promise-testing)
+
 When testing asynchronous code and promises things can be a bit tricky. This library provides a set of convenient 
 assertions for testing ReactPHP promises. To start using it extend your test classes
  from `seregazhuk\React\PromiseTesting\TestCase` class, which itself extends PHPUnit `TestCase`:
