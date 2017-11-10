@@ -1,6 +1,5 @@
 # ReactPHP Promises Testing
 A library that provides a set of convenient assertions for testing ReactPHP promises. 
-##
 
 When testing asynchronous code and promises things can be a bit tricky. This library provides a set of convenient 
 assertions for testing ReactPHP promises. To start using it extend your test classes
@@ -29,6 +28,10 @@ class MyTest extends TestCase
 Test above checks that a specified promise resolves. If the promise was rejected this test fails.
 
 ## Assertions
+ - [assertPromiseResolves()](#assertpromiseresolves())
+ - [assertPromiseResolvesWith](#assertpromiseresolveswith())
+ - [assertPromiseRejects](#assertpromiserejects())
+ - [assertPromiseRejectsWith](#assertpromiserejectswith())
 
 ### assertPromiseResolves()
 
