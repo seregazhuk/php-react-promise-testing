@@ -25,5 +25,10 @@
         "psr-4": {
             "seregazhuk\\React\\PromiseTesting\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "seregazhuk\\React\\PromiseTesting\\tests\\": "tests/"
+        }
     }
 }
