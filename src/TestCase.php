@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\React\Memcached\tests;
+namespace seregazhuk\React\PromiseTesting;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use React\Promise\PromiseInterface;
