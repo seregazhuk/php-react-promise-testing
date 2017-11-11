@@ -133,7 +133,7 @@ Failed asserting that 1234 matches expected 1.
 
 The test fails if the `$promise` resolves.
 
-You can specify `$timeout` in seconds to wait for promise to be resolved.
+You can specify `$timeout` in seconds to wait for promise to be rejected.
 If the promise was not resolved in specified timeout the test fails. When not specified, timeout is set to 2 seconds.
 
 ```php
@@ -167,7 +167,7 @@ Failed asserting that promise rejects. Promise was resolved.
 
 The test fails if the `$promise` doesn't reject with a specified exception class.
 
-You can specify `$timeout` in seconds to wait for promise to be resolved.
+You can specify `$timeout` in seconds to wait for promise to be rejected.
 If the promise was not resolved in specified timeout the test fails. When not specified, timeout is set to 2 seconds.
 
 ```php
