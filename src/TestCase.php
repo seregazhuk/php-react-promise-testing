@@ -116,7 +116,7 @@ class TestCase extends PHPUnitTestCase
      * @return mixed
      * @throws Exception
      */
-    public function waitForPromise(PromiseInterface $promise, $timeout)
+    public function waitForPromise(PromiseInterface $promise, $timeout = null)
     {
         return Block\await($promise, $this->loop, $timeout ?: self::DEFAULT_WAIT_TIMEOUT);
     }
