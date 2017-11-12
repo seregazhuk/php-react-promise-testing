@@ -16,7 +16,8 @@ assertions for testing ReactPHP promises.
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
     
 - [Helpers](#helpers)
-    - [waitForPromise](#waitForPromise)
+    - [waitForPromiseToResolve()](#waitforpromisetoresolve)
+    - [waitForPromise()](#waitForPromise)
     
 ## Installation
 
