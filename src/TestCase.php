@@ -64,7 +64,7 @@ class TestCase extends PHPUnitTestCase
 
     /**
      * @param PromiseInterface $promise
-     * @param null $timeout
+     * @param int|null $timeout
      * @return Exception
      */
     public function assertPromiseRejects(PromiseInterface $promise, $timeout = null)
@@ -81,7 +81,7 @@ class TestCase extends PHPUnitTestCase
     /**
      * @param PromiseInterface $promise
      * @param string $reasonExceptionClass
-     * @param int $timeout
+     * @param int|null $timeout
      */
     public function assertPromiseRejectsWith(PromiseInterface $promise, $reasonExceptionClass, $timeout = null)
     {
