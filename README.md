@@ -15,6 +15,9 @@ assertions for testing ReactPHP promises.
     - [assertPromiseRejects()](#assertpromiserejects)
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
     
+- [Helpers](#helpers)
+    - [waitForPromise](#waitForPromise)
+    
 ## Installation
 
 ### Dependencies
@@ -198,4 +201,56 @@ There was 1 failure:
 1) seregazhuk\React\PromiseTesting\tests\PromiseRejectsWithTest::promise_rejects_with_a_specified_reason
 Failed asserting that promise rejects with a specified reason.
 Failed asserting that LogicException Object (...) is an instance of class "InvalidArgumentException".
+```
+
+
+## Helpers
+
+### waitForPromiseToResolve()
+`function waitForPromise(PromiseInterface $promise, $timeout = null)`.
+
+This helper can be used when you want to resolve a promise and get the resolved value.
+
+Tries to resolve a `$promise` in a specified `$timeout` seconds and returns resolved value. If `$timeout` is not 
+set uses 2 seconds by default. The test fails if the `$promise` doesn't resolve.
+
+```php
+class WaitForPromiseToResolveTest extends TestCase
+{
+    /** @test */
+    public function promise_resolves()
+    {
+        $deferred = new Deferred();
+
+        $deferred->reject(new \Exception());
+        $value = $this->waitForPromiseToResolve($deferred->promise());
+    }
+}
+```
+
+```bash
+PHPUnit 5.7.23 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 223 ms, Memory: 6.00MB
+
+There was 1 failure:
+
+1) seregazhuk\React\PromiseTesting\tests\WaitForPromiseToResolveTest::promise_resolves
+Failed to resolve a promise. It was rejected with Exception.
+```
+
+### waitForPromise()
+`function waitForPromise(PromiseInterface $promise, $timeout = null)`.
+
+Tries to resolve a specified `$promise` in a specified `$timeout` seconds. If `$timeout` is not set uses 2 
+seconds by default. If the promise resolves returns a resolved value, otherwise throws an exception. If the 
+promise rejects throws the rejection reason, if the promise doesn't resolve in a specified `$timeout` throws 
+`React\Promise\Timer\TimeoutException`.
+
+This helper can be useful when you need to get the value from the resolved promise.
+
+```php
+$this->waitForPromise($cahce->set('key', 12345));
 ```

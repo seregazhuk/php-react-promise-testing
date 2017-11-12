@@ -96,11 +96,27 @@ class TestCase extends PHPUnitTestCase
 
     /**
      * @param PromiseInterface $promise
+     * @param int|null $timeout
+     * @return mixed
+     * @throws Exception
+     */
+    public function waitForPromiseToResolve(PromiseInterface $promise, $timeout = null)
+    {
+        try {
+            return $this->waitForPromise($promise, $timeout);
+        } catch (Exception $exception) {
+            $reason = get_class($exception);
+            $this->fail("Failed to resolve a promise. It was rejected with {$reason}.");
+        }
+    }
+
+    /**
+     * @param PromiseInterface $promise
      * @param int $timeout
      * @return mixed
      * @throws Exception
      */
-    protected function waitForPromise(PromiseInterface $promise, $timeout)
+    public function waitForPromise(PromiseInterface $promise, $timeout)
     {
         return Block\await($promise, $this->loop, $timeout ?: self::DEFAULT_WAIT_TIMEOUT);
     }
