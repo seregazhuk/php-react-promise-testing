@@ -1,5 +1,6 @@
 # ReactPHP Promises Testing
-A library that provides a set of convenient assertions for testing ReactPHP promises. 
+A library that provides a set of convenient assertions for testing ReactPHP promises.
+Under the hood uses [clue/php-block-react](https://github.com/clue/php-block-react) to block promises.
 
 [![Build Status](https://travis-ci.org/seregazhuk/php-react-promise-testing.svg?branch=master)](https://travis-ci.org/seregazhuk/php-react-promise-testing)
 
