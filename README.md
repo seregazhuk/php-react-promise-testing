@@ -251,8 +251,8 @@ seconds by default. If the promise resolves returns a resolved value, otherwise 
 promise rejects throws the rejection reason, if the promise doesn't resolve in a specified `$timeout` throws 
 `React\Promise\Timer\TimeoutException`.
 
-This helper can be useful when you need to get the value from the resolved promise.
+This helper can be useful when you need to get the value from the resolved promise in a synchronous way:
 
 ```php
-$this->waitForPromise($cahce->set('key', 12345));
+$value = $this->waitForPromise($cahce->get('key'));
 ```
