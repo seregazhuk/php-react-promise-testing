@@ -63,7 +63,7 @@ class PromiseResolvesWithTest extends TestCase
                 $deferred->resolve();
             });
 
-            $this->assertPromiseResolvesWith($promise, 1);
+            $this->assertPromiseResolvesWith($promise, 1, 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise resolves with a specified value/',
