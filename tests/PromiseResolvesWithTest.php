@@ -9,16 +9,16 @@ use seregazhuk\React\PromiseTesting\TestCase;
 class PromiseResolvesWithTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_fulfills_with_a_specified_value()
     {
         try {
             $deferred = new Deferred();
 
             $deferred->resolve(1234);
-            $this->assertPromiseResolvesWith($deferred->promise(), 1);
+            $this->assertPromiseFulfillsWith($deferred->promise(), 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise resolves with a specified value/',
+                '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()
             );
 
@@ -36,10 +36,10 @@ class PromiseResolvesWithTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $this->assertPromiseResolvesWith($deferred->promise(), 1);
+            $this->assertPromiseFulfillsWith($deferred->promise(), 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise resolves with a specified value/',
+                '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()
             );
 
@@ -51,7 +51,7 @@ class PromiseResolvesWithTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_when_promise_doesnt_resolve_in_a_specified_timeout()
+    public function it_fails_when_promise_doesnt_fulfill_in_a_specified_timeout()
     {
         try {
             $deferred = new Deferred();
@@ -63,10 +63,10 @@ class PromiseResolvesWithTest extends TestCase
                 $deferred->resolve();
             });
 
-            $this->assertPromiseResolvesWith($promise, 1, 1);
+            $this->assertPromiseFulfillsWith($promise, 1, 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise resolves with a specified value/',
+                '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()
             );
 

@@ -13,13 +13,13 @@ assertions for testing ReactPHP promises.
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Assertions](#assertions)
-    - [assertPromiseResolves()](#assertpromiseresolves)
-    - [assertPromiseResolvesWith()](#assertpromiseresolveswith)
+    - [assertPromiseFulfills()](#assertpromiseresolves)
+    - [assertPromiseFulfillsWith()](#assertpromiseresolveswith)
     - [assertPromiseRejects()](#assertpromiserejects)
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
     
 - [Helpers](#helpers)
-    - [waitForPromiseToResolve()](#waitforpromisetoresolve)
+    - [waitForPromiseToFulfill()](#waitforpromisetoresolve)
     - [waitForPromise()](#waitforpromise)
     
 ## Installation
@@ -55,7 +55,7 @@ class MyTest extends TestCase
         };
 
         $promise = new Promise($resolve, $cancel);
-        $this->assertPromiseResolves($promise);
+        $this->assertPromiseFulfills($promise);
     }
 }
 
@@ -65,9 +65,9 @@ Test above checks that a specified promise resolves. If the promise was rejected
 
 ## Assertions
 
-### assertPromiseResolves()
+### assertPromiseFulfills()
 
-`public function assertPromiseResolves(PromiseInterface $promise, $timeout = null)`
+`public function assertPromiseFulfills(PromiseInterface $promise, $timeout = null)`
 
 The test fails if the `$promise` rejects. 
 
@@ -82,7 +82,7 @@ class PromiseResolvesTest extends TestCase
     {
         $deferred = new Deferred();
         $deferred->reject();
-        $this->assertPromiseResolves($deferred->promise(), 1);
+        $this->assertPromiseFulfills($deferred->promise(), 1);
     }
 }
 ```
@@ -100,8 +100,8 @@ There was 1 failure:
 Failed asserting that promise resolves. Promise was rejected.
 ```
 
-### assertPromiseResolvesWith()
-`assertPromiseResolvesWith(PromiseInterface $promise, $value, $timeout = null)`
+### assertPromiseFulfillsWith()
+`assertPromiseFulfillsWith(PromiseInterface $promise, $value, $timeout = null)`
 
 The test fails if the `$promise` doesn't resolve with a specified `$value`.
 
@@ -117,7 +117,7 @@ class PromiseResolvesWithTest extends TestCase
     {
         $deferred = new Deferred();
         $deferred->resolve(1234);
-        $this->assertPromiseResolvesWith($deferred->promise(), 1);
+        $this->assertPromiseFulfillsWith($deferred->promise(), 1);
     }
 }
 ```
@@ -210,7 +210,7 @@ Failed asserting that LogicException Object (...) is an instance of class "Inval
 
 ## Helpers
 
-### waitForPromiseToResolve()
+### waitForPromiseToFulfill()
 `function waitForPromise(PromiseInterface $promise, $timeout = null)`.
 
 This helper can be used when you want to resolve a promise and get the resolved value.
@@ -219,7 +219,7 @@ Tries to resolve a `$promise` in a specified `$timeout` seconds and returns reso
 set uses 2 seconds by default. The test fails if the `$promise` doesn't resolve.
 
 ```php
-class WaitForPromiseToResolveTest extends TestCase
+class WaitForPromiseToFulfillTest extends TestCase
 {
     /** @test */
     public function promise_resolves()
@@ -227,7 +227,7 @@ class WaitForPromiseToResolveTest extends TestCase
         $deferred = new Deferred();
 
         $deferred->reject(new \Exception());
-        $value = $this->waitForPromiseToResolve($deferred->promise());
+        $value = $this->waitForPromiseToFulfill($deferred->promise());
     }
 }
 ```
@@ -241,7 +241,7 @@ Time: 223 ms, Memory: 6.00MB
 
 There was 1 failure:
 
-1) seregazhuk\React\PromiseTesting\tests\WaitForPromiseToResolveTest::promise_resolves
+1) seregazhuk\React\PromiseTesting\tests\WaitForPromiseToFulfillTest::promise_resolves
 Failed to resolve a promise. It was rejected with Exception.
 ```
 
