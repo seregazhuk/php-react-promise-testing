@@ -28,10 +28,10 @@ class TestCase extends PHPUnitTestCase
      * @param int|null $timeout seconds to wait for resolving
      * @return mixed
      */
-    public function assertPromiseResolves(PromiseInterface $promise, $timeout = null)
+    public function assertPromiseFulfills(PromiseInterface $promise, $timeout = null)
     {
         $this->addToAssertionCount(1);
-        $failMessage = 'Failed asserting that promise resolves. ';
+        $failMessage = 'Failed asserting that promise fulfills. ';
 
         try {
             return $this->waitForPromise($promise, $timeout);
@@ -48,9 +48,9 @@ class TestCase extends PHPUnitTestCase
      * @param mixed $value
      * @param int|null $timeout
      */
-    public function assertPromiseResolvesWith(PromiseInterface $promise, $value, $timeout = null)
+    public function assertPromiseFulfillsWith(PromiseInterface $promise, $value, $timeout = null)
     {
-        $failMessage = 'Failed asserting that promise resolves with a specified value. ';
+        $failMessage = 'Failed asserting that promise fulfills with a specified value. ';
 
         try {
             $result = $this->waitForPromise($promise, $timeout);
@@ -77,7 +77,7 @@ class TestCase extends PHPUnitTestCase
             return $exception;
         }
 
-        $this->fail('Failed asserting that promise rejects. Promise was resolved.');
+        $this->fail('Failed asserting that promise rejects. Promise was fulfilled.');
     }
 
     /**
@@ -102,13 +102,13 @@ class TestCase extends PHPUnitTestCase
      * @return mixed
      * @throws Exception
      */
-    public function waitForPromiseToResolve(PromiseInterface $promise, $timeout = null)
+    public function waitForPromiseToFulfill(PromiseInterface $promise, $timeout = null)
     {
         try {
             return $this->waitForPromise($promise, $timeout);
         } catch (Exception $exception) {
             $reason = get_class($exception);
-            $this->fail("Failed to resolve a promise. It was rejected with {$reason}.");
+            $this->fail("Failed to fulfill a promise. It was rejected with {$reason}.");
         }
     }
 

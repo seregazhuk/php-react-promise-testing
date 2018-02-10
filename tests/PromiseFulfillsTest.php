@@ -6,25 +6,25 @@ use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-class PromiseResolvesTest extends TestCase
+class PromiseFulfillsTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_fulfills()
     {
         try {
             $deferred = new Deferred();
             $deferred->reject();
-            $this->assertPromiseResolves($deferred->promise(), 1);
+            $this->assertPromiseFulfills($deferred->promise(), 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise resolves. Promise was rejected/',
+                '/Failed asserting that promise fulfills. Promise was rejected/',
                 $exception->getMessage()
             );
         }
     }
 
     /** @test */
-    public function it_fails_when_promise_doesnt_resolve_in_a_specified_timeout()
+    public function it_fails_when_promise_doesnt_fulfill_in_a_specified_timeout()
     {
         try {
             $deferred = new Deferred();
@@ -36,10 +36,10 @@ class PromiseResolvesTest extends TestCase
                 $deferred->resolve();
             });
 
-            $this->assertPromiseResolves($promise, 1);
+            $this->assertPromiseFulfills($promise, 1);
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise resolves. Promise was rejected/',
+                '/Failed asserting that promise fulfills. Promise was rejected/',
                 $exception->getMessage()
             );
 

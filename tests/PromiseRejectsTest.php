@@ -3,7 +3,6 @@
 namespace seregazhuk\React\PromiseTesting\tests;
 
 use React\Promise\Deferred;
-use React\Promise\Promise;
 use seregazhuk\React\PromiseTesting\TestCase;
 
 class PromiseRejectsTest extends TestCase
@@ -17,7 +16,7 @@ class PromiseRejectsTest extends TestCase
             $this->assertPromiseRejects($deferred->promise());
         } catch (\PHPUnit_Framework_Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise rejects. Promise was resolved/',
+                '/Failed asserting that promise rejects. Promise was fulfilled/',
                 $exception->getMessage()
             );
         }
