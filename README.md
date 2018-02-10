@@ -13,13 +13,13 @@ assertions for testing ReactPHP promises.
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Assertions](#assertions)
-    - [assertPromiseFulfills()](#assertpromiseresolves)
-    - [assertPromiseFulfillsWith()](#assertpromiseresolveswith)
-    - [assertPromiseRejects()](#assertpromiserejects)
+    - [assertPromiseFulfills()](#assertpromisefulfills)
+    - [assertPromiseFulfillsWith()](#assertpromisefulfillswith)
+    - [assertPromiseRejects()](#assertpromiserejects())
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
     
 - [Helpers](#helpers)
-    - [waitForPromiseToFulfill()](#waitforpromisetoresolve)
+    - [waitForPromiseToFulfill()](#waitforpromisetofulfill)
     - [waitForPromise()](#waitforpromise)
     
 ## Installation
@@ -44,7 +44,7 @@ which itself extends PHPUnit `TestCase`:
 class MyTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_fulfills()
     {
         $resolve = function(callable $resolve, callable $reject) {
             return $resolve('Promise resolved!');
@@ -61,7 +61,7 @@ class MyTest extends TestCase
 
 ```
 
-Test above checks that a specified promise resolves. If the promise was rejected this test fails.
+Test above checks that a specified promise fulfills. If the promise was rejected this test fails.
 
 ## Assertions
 
@@ -72,13 +72,13 @@ Test above checks that a specified promise resolves. If the promise was rejected
 The test fails if the `$promise` rejects. 
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
-If the promise was not resolved in specified timeout the test fails. When not specified, timeout is set to 2 seconds.
+If the promise was not fulfilled in specified timeout the test fails. When not specified, timeout is set to 2 seconds.
 
 ```php
-class PromiseResolvesTest extends TestCase
+class PromiseFulfillsTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_fulfills()
     {
         $deferred = new Deferred();
         $deferred->reject();
@@ -96,24 +96,24 @@ Time: 189 ms, Memory: 4.00MB
 
 There was 1 failure:
 
-1) seregazhuk\React\PromiseTesting\tests\PromiseResolvesTest::promise_resolves
-Failed asserting that promise resolves. Promise was rejected.
+1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillTest::promise_fulfills
+Failed asserting that promise fulfills. Promise was rejected.
 ```
 
 ### assertPromiseFulfillsWith()
 `assertPromiseFulfillsWith(PromiseInterface $promise, $value, $timeout = null)`
 
-The test fails if the `$promise` doesn't resolve with a specified `$value`.
+The test fails if the `$promise` doesn't fulfills with a specified `$value`.
 
-You can specify `$timeout` in seconds to wait for promise to be resolved.
-If the promise was not resolved in specified timeout the test fails. 
+You can specify `$timeout` in seconds to wait for promise to be fulfilled.
+If the promise was not fulfilled in specified timeout the test fails. 
 When not specified, timeout is set to 2 seconds.
 
 ```php
-class PromiseResolvesWithTest extends TestCase
+class PromiseFulfillsWithTest extends TestCase
 {
     /** @test */
-    public function promise_resolves_with_a_specified_value()
+    public function promise_fulfills_with_a_specified_value()
     {
         $deferred = new Deferred();
         $deferred->resolve(1234);
@@ -131,18 +131,18 @@ Time: 180 ms, Memory: 4.00MB
 
 There was 1 failure:
 
-1) seregazhuk\React\PromiseTesting\tests\PromiseResolvesWithTest::promise_resolves
-Failed asserting that promise resolves with a specified value. 
+1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillsWithTest::promise_fulfills_with_a_specified_value
+Failed asserting that promise fulfills with a specified value. 
 Failed asserting that 1234 matches expected 1.
 ```
 
 ### assertPromiseRejects()
 `assertPromiseRejects(PromiseInterface $promise, $timeout = null)`
 
-The test fails if the `$promise` resolves.
+The test fails if the `$promise` fulfills.
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
-If the promise was not resolved in specified timeout, it rejects with `React\Promise\Timer\TimeoutException` . 
+If the promise was not fulfilled in specified timeout, it rejects with `React\Promise\Timer\TimeoutException` . 
 When not specified, timeout is set to 2 seconds.
 
 ```php
@@ -168,7 +168,7 @@ Time: 175 ms, Memory: 4.00MB
 There was 1 failure:
 
 1) seregazhuk\React\PromiseTesting\tests\PromiseRejectsTest::promise_rejects
-Failed asserting that promise rejects. Promise was resolved.
+Failed asserting that promise rejects. Promise was fulfilled.
 ```
 
 ### assertPromiseRejectsWith()
@@ -177,7 +177,7 @@ Failed asserting that promise rejects. Promise was resolved.
 The test fails if the `$promise` doesn't reject with a specified exception class.
 
 You can specify `$timeout` in seconds to wait for promise to be resolved.
-If the promise was not resolved in specified timeout, it rejects with `React\Promise\Timer\TimeoutException`. 
+If the promise was not fulfilled in specified timeout, it rejects with `React\Promise\Timer\TimeoutException`. 
 When not specified, timeout is set to 2 seconds.
 
 ```php
@@ -216,13 +216,13 @@ Failed asserting that LogicException Object (...) is an instance of class "Inval
 This helper can be used when you want to resolve a promise and get the resolved value.
 
 Tries to resolve a `$promise` in a specified `$timeout` seconds and returns resolved value. If `$timeout` is not 
-set uses 2 seconds by default. The test fails if the `$promise` doesn't resolve.
+set uses 2 seconds by default. The test fails if the `$promise` doesn't fulfill.
 
 ```php
 class WaitForPromiseToFulfillTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_fulfills()
     {
         $deferred = new Deferred();
 
@@ -241,19 +241,19 @@ Time: 223 ms, Memory: 6.00MB
 
 There was 1 failure:
 
-1) seregazhuk\React\PromiseTesting\tests\WaitForPromiseToFulfillTest::promise_resolves
-Failed to resolve a promise. It was rejected with Exception.
+1) seregazhuk\React\PromiseTesting\tests\WaitForPromiseToFulfillTest::promise_fulfills
+Failed to fulfill a promise. It was rejected with Exception.
 ```
 
 ### waitForPromise()
 `function waitForPromise(PromiseInterface $promise, $timeout = null)`.
 
 Tries to resolve a specified `$promise` in a specified `$timeout` seconds. If `$timeout` is not set uses 2 
-seconds by default. If the promise resolves returns a resolved value, otherwise throws an exception. If the 
-promise rejects throws the rejection reason, if the promise doesn't resolve in a specified `$timeout` throws 
+seconds by default. If the promise fulfills returns a resolved value, otherwise throws an exception. If the 
+promise rejects throws the rejection reason, if the promise doesn't fulfill in a specified `$timeout` throws 
 `React\Promise\Timer\TimeoutException`.
 
-This helper can be useful when you need to get the value from the resolved promise in a synchronous way:
+This helper can be useful when you need to get the value from the fulfilled promise in a synchronous way:
 
 ```php
 $value = $this->waitForPromise($cahce->get('key'));

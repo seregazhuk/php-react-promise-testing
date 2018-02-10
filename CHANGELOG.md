@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v0.1.3 - 2018-02-10 
+### Fixed:
+ - method names (replace verb `resolve` with `fulfill`)
+
 ## v0.1.2 - 2017-12-01
 ### Fixed:
  - increase assertions count when checking that promise resolves/rejects
