@@ -2,6 +2,7 @@
 
 namespace seregazhuk\React\PromiseTesting\tests;
 
+use Exception;
 use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
@@ -16,7 +17,7 @@ class PromiseResolvesWithTest extends TestCase
 
             $deferred->resolve(1234);
             $this->assertPromiseFulfillsWith($deferred->promise(), 1);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()
@@ -37,7 +38,7 @@ class PromiseResolvesWithTest extends TestCase
 
             $deferred->reject();
             $this->assertPromiseFulfillsWith($deferred->promise(), 1);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()
@@ -64,7 +65,7 @@ class PromiseResolvesWithTest extends TestCase
             });
 
             $this->assertPromiseFulfillsWith($promise, 1, 1);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise fulfills with a specified value/',
                 $exception->getMessage()

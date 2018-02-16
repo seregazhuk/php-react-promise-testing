@@ -2,6 +2,7 @@
 
 namespace seregazhuk\React\PromiseTesting\tests;
 
+use Exception;
 use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
@@ -15,13 +16,13 @@ class PromiseFulfillsTest extends TestCase
             $deferred = new Deferred();
             $deferred->reject();
             $this->assertPromiseFulfills($deferred->promise(), 1);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise fulfills. Promise was rejected/',
                 $exception->getMessage()
             );
-        }
-    }
+        } 
+     }
 
     /** @test */
     public function it_fails_when_promise_doesnt_fulfill_in_a_specified_timeout()
@@ -37,7 +38,7 @@ class PromiseFulfillsTest extends TestCase
             });
 
             $this->assertPromiseFulfills($promise, 1);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed asserting that promise fulfills. Promise was rejected/',
                 $exception->getMessage()

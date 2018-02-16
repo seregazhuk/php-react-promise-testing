@@ -2,8 +2,8 @@
 
 namespace seregazhuk\React\PromiseTesting\tests;
 
+use Exception;
 use React\Promise\Deferred;
-use React\Promise\Promise;
 use seregazhuk\React\PromiseTesting\TestCase;
 
 class PromiseRejectsWithTest extends TestCase
@@ -15,7 +15,7 @@ class PromiseRejectsWithTest extends TestCase
             $deferred = new Deferred();
             $deferred->reject(new \LogicException());
             $this->assertPromiseRejectsWith($deferred->promise(), \InvalidArgumentException::class);
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp('/Failed asserting that promise rejects with a specified reason/', $exception->getMessage());
             $this->assertRegExp(
                 '/Failed asserting that LogicException Object .+ is an instance of class "InvalidArgumentException"/',

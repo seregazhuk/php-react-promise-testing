@@ -2,6 +2,7 @@
 
 namespace seregazhuk\React\PromiseTesting\tests;
 
+use Exception;
 use React\Promise\Deferred;
 use seregazhuk\React\PromiseTesting\TestCase;
 
@@ -13,9 +14,9 @@ class WaitForPromiseToFulfillTest extends TestCase
         try {
             $deferred = new Deferred();
 
-            $deferred->reject(new \Exception());
+            $deferred->reject(new Exception());
             $value = $this->waitForPromiseToFulfill($deferred->promise());
-        } catch (\PHPUnit_Framework_Exception $exception) {
+        } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed to fulfill a promise. It was rejected with Exception/',
                 $exception->getMessage()
