@@ -17,6 +17,10 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
   - composer dump-autoload
 
+  # Create a storage folder for coverage report
+  - mkdir -p build/logs
+  - ls -al
+
 script: phpunit
 
 after_script:
