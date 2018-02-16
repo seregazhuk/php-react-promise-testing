@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v0.1.3 - 2018-02-16
+## v0.1.4 - 2018-02-16
 ### Added:
  -  support for php7
 
