@@ -30,7 +30,6 @@ class TestCase extends PHPUnitTestCase
      */
     public function assertPromiseFulfills(PromiseInterface $promise, $timeout = null)
     {
-        $this->addToAssertionCount(1);
         $failMessage = 'Failed asserting that promise fulfills. ';
 
         try {
@@ -40,6 +39,7 @@ class TestCase extends PHPUnitTestCase
         } catch (Exception $exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -71,12 +71,12 @@ class TestCase extends PHPUnitTestCase
     public function assertPromiseRejects(PromiseInterface $promise, $timeout = null)
     {
         try {
-            $this->addToAssertionCount(1);
             $this->waitForPromise($promise, $timeout);
         } catch (Exception $exception) {
             return $exception;
         }
 
+        $this->addToAssertionCount(1);
         $this->fail('Failed asserting that promise rejects. Promise was fulfilled.');
     }
 

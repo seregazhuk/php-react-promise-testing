@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v0.1.5 - 2018-03-01
+### Added:
+ - fixed wrong assertions count
+
 ## v0.1.4 - 2018-02-16
 ### Added:
  -  support for php7
