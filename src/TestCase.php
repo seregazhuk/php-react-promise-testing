@@ -2,6 +2,7 @@
 
 namespace seregazhuk\React\PromiseTesting;
 
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use React\Promise\PromiseInterface;
 use Clue\React\Block;
@@ -27,6 +28,7 @@ class TestCase extends PHPUnitTestCase
      * @param PromiseInterface $promise
      * @param int|null $timeout seconds to wait for resolving
      * @return mixed
+     * @throws AssertionFailedError
      */
     public function assertPromiseFulfills(PromiseInterface $promise, $timeout = null)
     {
@@ -47,10 +49,12 @@ class TestCase extends PHPUnitTestCase
      * @param PromiseInterface $promise
      * @param mixed $value
      * @param int|null $timeout
+     * @throws AssertionFailedError
      */
     public function assertPromiseFulfillsWith(PromiseInterface $promise, $value, $timeout = null)
     {
         $failMessage = 'Failed asserting that promise fulfills with a specified value. ';
+        $result = null;
 
         try {
             $result = $this->waitForPromise($promise, $timeout);
@@ -67,6 +71,7 @@ class TestCase extends PHPUnitTestCase
      * @param PromiseInterface $promise
      * @param int|null $timeout
      * @return Exception
+     * @throws AssertionFailedError
      */
     public function assertPromiseRejects(PromiseInterface $promise, $timeout = null)
     {
@@ -84,6 +89,7 @@ class TestCase extends PHPUnitTestCase
      * @param PromiseInterface $promise
      * @param string $reasonExceptionClass
      * @param int|null $timeout
+     * @throws AssertionFailedError
      */
     public function assertPromiseRejectsWith(PromiseInterface $promise, $reasonExceptionClass, $timeout = null)
     {
