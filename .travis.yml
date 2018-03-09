@@ -25,3 +25,6 @@ script: phpunit
 
 after_script:
   - vendor/bin/test-reporter
+
+after_success:
+    php coverage-checker.php clover.xml 75
