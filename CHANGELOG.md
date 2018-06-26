@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v0.2.0 - 2018-06-26
+### Updated:
+ - dependencies and php version changed to 7.2
+
 ## v0.1.5 - 2018-03-01
 ### Fixed:
  - wrong assertions count
