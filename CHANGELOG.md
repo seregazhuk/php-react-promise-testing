@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.2 - 2019-04-06
+### Fixed:
+ - use vendor PHPUnit when running TravisCI
+
 ## 0.2.1 - 2018-09-14
 ### Fixed:
  - assertions counter
