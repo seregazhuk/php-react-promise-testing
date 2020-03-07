@@ -1,8 +1,5 @@
 language: php
 
-php:
-  - 7.2
-
 sudo: false
 
 addons:
@@ -10,15 +7,21 @@ addons:
     repo_token:
       secure: "GxuXRKt6H2Df0xry9BhCnKzRxkPeBKvNrzpWj39GH9gszEjPfVRmeboREdEqwzNmJrqYluR691Jp1O9DsWqmiuN0Gq4Rrf+6EheJ6FeLrMsGpzMiJOQXCIvFD1eMUkJRLbO0yAy19jmFJwtFux6P+J76DpwIoVx57PR8kayMstQ4bDsTJp2lAsXIzwHNostVXjRKLIczjSd8DtQnegR6ehETG6us1RNnHTGQeWbhd8gnZ0oewiWNRfPQ6Lmhx3ZIrIxz4kdZi+Km58MH0U+ffZK0k1aBfLcGhxtCANXjvoc/aC3UHqEO19YPKVGxDyzq2aGj08iPT3a9E2E8Frw3N9MAxtY7sjbgRgNSvrg2gIdUyxIvkd+VbCZUsaKyRZubYinqnbwCImyVAKx0hBiTR/OwYbnry+3h9Rk6FBQ/enumsqRrnjazUcW0GeW3OKjOe4znzOmevt/GvWer19SxdzS69yRfjGwZE6ur9Se8wjpF42nikqPOEC7zqEVWVSz0vPSH3Qc8ckaaVvQuo/rRciq+32MxuHzROFJiL/lKUcvm+b2DRt+HtQ0PkPp6S0VNuDrfTioABaW9Sz97RRSdd0jD3Sarg0SApb8LwqTu5mHtv/UBoU6AsBZ0VuQVnhqtBB608iRKLTktK8UyoXSMhPNy5eSM8VYcDbp/da3ILqU="
 
-before_script:
-  - composer install --prefer-source --no-interaction
-  - composer dump-autoload
+jobs:
+    include:
+        - stage: "PHP7.2 - lowest"
+          php: 7.2
+          script:
+              - composer update -n --prefer-dist --prefer-lowest --no-suggest
+              - composer dump-autoload
+              - composer ci:tests
 
-  # Create a storage folder for coverage report
-  - mkdir -p build/logs
-  - ls -al
-
-script: vendor/bin/phpunit
+        - stage: "PHP7.3 - highest"
+          php: 7.3
+          script:
+              - composer update -n --prefer-dist --no-suggest
+              - composer dump-autoload
+              - composer ci:tests
 
 after_script:
   - vendor/bin/test-reporter
