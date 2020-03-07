@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use React\Promise\PromiseInterface;
 use Clue\React\Block;
 use Exception;
-use React\EventLoop\LoopInterface;
 use React\EventLoop\Factory as LoopFactory;
 use React\Promise\Timer\TimeoutException;
 
@@ -51,6 +50,7 @@ class TestCase extends PHPUnitTestCase
     {
         $failMessage = 'Failed asserting that promise fulfills with a specified value. ';
         $result = null;
+        $this->addToAssertionCount(1);
 
         try {
             $result = $this->waitForPromise($promise, $timeout);
@@ -68,14 +68,14 @@ class TestCase extends PHPUnitTestCase
      * @param int|null $timeout
      * @throws AssertionFailedError
      */
-    public function assertPromiseRejects(PromiseInterface $promise, int $timeout = null): Exception
+    public function assertPromiseRejects(PromiseInterface $promise, int $timeout = null): void
     {
         $this->addToAssertionCount(1);
 
         try {
             $this->waitForPromise($promise, $timeout);
         } catch (Exception $exception) {
-            return $exception;
+            return;
         }
 
         $this->fail('Failed asserting that promise rejects. Promise was fulfilled.');
@@ -86,15 +86,20 @@ class TestCase extends PHPUnitTestCase
      */
     public function assertPromiseRejectsWith(PromiseInterface $promise, string $reasonExceptionClass, int $timeout = null): void
     {
-        $reason = $this->assertPromiseRejects($promise, $timeout);
+        try {
+            $this->waitForPromise($promise, $timeout);
+        } catch (Exception $reason) {
+            $this->assertInstanceOf(
+                $reasonExceptionClass, $reason, 'Failed asserting that promise rejects with a specified reason.'
+            );
+        }
 
-        $this->assertInstanceOf(
-            $reasonExceptionClass, $reason, 'Failed asserting that promise rejects with a specified reason.'
-        );
+        $this->fail('Failed asserting that promise rejects. Promise was fulfilled.');
     }
 
     /**
      * @throws Exception
+     * @return mixed
      */
     public function waitForPromiseToFulfill(PromiseInterface $promise, int $timeout = null)
     {
@@ -107,12 +112,10 @@ class TestCase extends PHPUnitTestCase
     }
 
     /**
-     * @param PromiseInterface $promise
-     * @param int $timeout
      * @return mixed
      * @throws Exception
      */
-    public function waitForPromise(PromiseInterface $promise, $timeout = null)
+    public function waitForPromise(PromiseInterface $promise, int $timeout = null)
     {
         return Block\await($promise, $this->loop, $timeout ?: self::DEFAULT_WAIT_TIMEOUT);
     }

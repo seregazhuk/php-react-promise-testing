@@ -6,10 +6,10 @@ use Exception;
 use React\Promise\Deferred;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-class PromiseRejectsWithTest extends TestCase
+final class PromiseRejectsWithTest extends TestCase
 {
     /** @test */
-    public function promise_rejects_with_a_specified_reason()
+    public function promise_rejects_with_a_specified_reason(): void
     {
         try {
             $deferred = new Deferred();

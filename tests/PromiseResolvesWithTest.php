@@ -7,10 +7,10 @@ use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-class PromiseResolvesWithTest extends TestCase
+final class PromiseResolvesWithTest extends TestCase
 {
     /** @test */
-    public function promise_fulfills_with_a_specified_value()
+    public function promise_fulfills_with_a_specified_value(): void
     {
         try {
             $deferred = new Deferred();
@@ -31,7 +31,7 @@ class PromiseResolvesWithTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_when_promise_rejects()
+    public function it_fails_when_promise_rejects(): void
     {
         try {
             $deferred = new Deferred();
@@ -52,7 +52,7 @@ class PromiseResolvesWithTest extends TestCase
     }
 
     /** @test */
-    public function it_fails_when_promise_doesnt_fulfill_in_a_specified_timeout()
+    public function it_fails_when_promise_doesnt_fulfill_in_a_specified_timeout(): void
     {
         try {
             $deferred = new Deferred();
