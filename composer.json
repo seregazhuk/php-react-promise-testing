@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.2",
         "react/promise": "^2.7",
         "phpunit/phpunit": "^8.2",
         "clue/block-react": "^1.3"
