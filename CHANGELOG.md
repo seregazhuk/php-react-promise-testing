@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.3.0 - 2020-03-07
+### Updated:
+ - Dependencies
+ - Added types
+
 ## 0.2.2 - 2019-04-06
 ### Fixed:
  - use vendor PHPUnit when running TravisCI

@@ -6,10 +6,10 @@ use Exception;
 use React\Promise\Deferred;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-class WaitForPromiseToFulfillTest extends TestCase
+final class WaitForPromiseToFulfillTest extends TestCase
 {
     /** @test */
-    public function promise_resolves()
+    public function promise_resolves(): void
     {
         try {
             $deferred = new Deferred();
