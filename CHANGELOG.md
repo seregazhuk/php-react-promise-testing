@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 0.3.0 - 2020-03-07
+## 0.3.0 - 2020-03-08
 ### Updated:
  - Dependencies
  - Added types
