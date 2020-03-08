@@ -33,15 +33,15 @@ The recommended way to install this library is via [Composer](https://getcompose
 See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
 
 ```
-composer require seregazhuk/react-promise-testing
+composer require seregazhuk/react-promise-testing --dev
 ```
 
 ## Quick Start
-To start using it extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
+Just extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
 which itself extends PHPUnit `TestCase`:
  
 ```php
-class MyTest extends TestCase
+final class MyTest extends TestCase
 {
     /** @test */
     public function promise_fulfills()
@@ -101,6 +101,7 @@ Failed asserting that promise fulfills. Promise was rejected.
 ```
 
 ### assertPromiseFulfillsWith()
+
 `assertPromiseFulfillsWith(PromiseInterface $promise, $value, int $timeout = null): void`
 
 The test fails if the `$promise` doesn't fulfills with a specified `$value`.
@@ -134,6 +135,42 @@ There was 1 failure:
 1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillsWithTest::promise_fulfills_with_a_specified_value
 Failed asserting that promise fulfills with a specified value. 
 Failed asserting that 1234 matches expected 1.
+```
+
+### assertPromiseFulfillsWith()
+
+`assertPromiseFulfillsWith(PromiseInterface $promise, $value, int $timeout = null): void`
+
+The test fails if the `$promise` doesn't fulfills with a specified `$value`.
+
+You can specify `$timeout` in seconds to wait for promise to be fulfilled.
+If the promise was not fulfilled in specified timeout the test fails. 
+When not specified, timeout is set to 2 seconds.
+
+```php
+final class PromiseFulfillsWithInstanceOfTest extends TestCase
+{
+    /** @test */
+    public function promise_fulfills_with_an_instance_of_class(): void
+    {
+        $deferred = new Deferred();
+        $deferred->resolve(new MyClass);
+        $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class);
+    }
+}
+```
+
+```bash
+PHPUnit 8.5.2 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 180 ms, Memory: 4.00MB
+
+There was 1 failure:
+
+1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillsWithWithInstanceOfTest::promise_fulfills_with_an_instance_of_class
+Failed asserting that promise fulfills with a value of class MyClass. 
 ```
 
 ### assertPromiseRejects()

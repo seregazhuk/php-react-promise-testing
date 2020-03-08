@@ -10,7 +10,7 @@ use Exception;
 use React\EventLoop\Factory as LoopFactory;
 use React\Promise\Timer\TimeoutException;
 
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     private const DEFAULT_WAIT_TIMEOUT = 2;
 
@@ -34,7 +34,7 @@ class TestCase extends PHPUnitTestCase
         try {
             $this->waitForPromise($promise, $timeout);
         } catch (TimeoutException $exception) {
-            $this->fail($failMessage . 'Promise was rejected by timeout.');
+            $this->fail($failMessage . 'Promise was cancelled due to timeout.');
         } catch (Exception $exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
@@ -55,12 +55,32 @@ class TestCase extends PHPUnitTestCase
         try {
             $result = $this->waitForPromise($promise, $timeout);
         } catch (TimeoutException $exception) {
-            $this->fail($failMessage . 'Promise was rejected by timeout.');
+            $this->fail($failMessage . 'Promise was cancelled due to timeout.');
         } catch (Exception $exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
 
         $this->assertEquals($value, $result, $failMessage);
+    }
+
+    /**
+     * @throws AssertionFailedError
+     */
+    public function assertPromiseFulfillsWithInstanceOf(PromiseInterface $promise, string $class, int $timeout = null): void
+    {
+        $failMessage = "Failed asserting that promise fulfills with a value of class $class. ";
+        $result = null;
+        $this->addToAssertionCount(1);
+
+        try {
+            $result = $this->waitForPromise($promise, $timeout);
+        } catch (TimeoutException $exception) {
+            $this->fail($failMessage . 'Promise was cancelled due to timeout.');
+        } catch (Exception $exception) {
+            $this->fail($failMessage . 'Promise was rejected.');
+        }
+
+        $this->assertInstanceOf($class, $result, $failMessage);
     }
 
     /**

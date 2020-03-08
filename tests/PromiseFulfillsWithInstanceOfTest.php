@@ -7,19 +7,18 @@ use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-final class PromiseResolvesWithTest extends TestCase
+final class PromiseFulfillsWithInstanceOfTest extends TestCase
 {
     /** @test */
-    public function promise_fulfills_with_a_specified_value(): void
+    public function promise_fulfills_with_a_value_of_a_specified_class(): void
     {
         try {
             $deferred = new Deferred();
-
-            $deferred->resolve(1234);
-            $this->assertPromiseFulfillsWith($deferred->promise(), 1);
+            $deferred->resolve(new MyClass());
+            $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class, 1);
         } catch (Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise fulfills with a specified value/',
+                '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
@@ -37,10 +36,10 @@ final class PromiseResolvesWithTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $this->assertPromiseFulfillsWith($deferred->promise(), 1);
+            $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class, 1);
         } catch (Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise fulfills with a specified value/',
+                '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
@@ -58,23 +57,29 @@ final class PromiseResolvesWithTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $promise = resolve(3, $this->loop);
+            $promise = resolve($timeToResolve = 3, $this->loop);
 
-            $promise->then(function() use ($deferred){
-                $deferred->resolve();
-            });
+            $promise->then(
+                static function() use ($deferred){
+                    $deferred->resolve(new MyClass());
+                }
+            );
 
-            $this->assertPromiseFulfillsWith($promise, 1, 1);
+            $this->assertPromiseFulfillsWithInstanceOf($promise, MyClass::class, 1);
         } catch (Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise fulfills with a specified value/',
+                '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
             $this->assertRegExp(
-                '/Promise was rejected by timeout/',
+                '/Promise was cancelled due to timeout/',
                 $exception->getMessage()
             );
         }
     }
+}
+
+final class MyClass {
+
 }
