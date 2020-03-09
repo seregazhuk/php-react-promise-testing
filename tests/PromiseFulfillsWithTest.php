@@ -58,7 +58,7 @@ final class PromiseFulfillsWithTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $promise = resolve($timeToResolve = 3, $this->loop);
+            $promise = resolve($timeToResolve = 3, $this->eventLoop());
 
             $promise->then(
                 static function () use ($deferred) {
