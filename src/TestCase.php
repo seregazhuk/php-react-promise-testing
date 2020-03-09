@@ -4,6 +4,7 @@ namespace seregazhuk\React\PromiseTesting;
 
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use Clue\React\Block;
 use Exception;
@@ -14,7 +15,7 @@ abstract class TestCase extends PHPUnitTestCase
 {
     private const DEFAULT_WAIT_TIMEOUT = 2;
 
-    protected $loop;
+    private $loop;
 
     protected function setUp(): void
     {
@@ -138,5 +139,10 @@ abstract class TestCase extends PHPUnitTestCase
     public function waitForPromise(PromiseInterface $promise, int $timeout = null)
     {
         return Block\await($promise, $this->loop, $timeout ?: self::DEFAULT_WAIT_TIMEOUT);
+    }
+
+    public function eventLoop(): LoopInterface
+    {
+        return $this->loop;
     }
 }
