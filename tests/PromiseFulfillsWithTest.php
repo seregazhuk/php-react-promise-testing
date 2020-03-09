@@ -7,7 +7,7 @@ use React\Promise\Deferred;
 use function React\Promise\Timer\resolve;
 use seregazhuk\React\PromiseTesting\TestCase;
 
-final class PromiseResolvesWithTest extends TestCase
+final class PromiseFulfillsWithTest extends TestCase
 {
     /** @test */
     public function promise_fulfills_with_a_specified_value(): void
@@ -58,11 +58,13 @@ final class PromiseResolvesWithTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $promise = resolve(3, $this->loop);
+            $promise = resolve($timeToResolve = 3, $this->eventLoop());
 
-            $promise->then(function() use ($deferred){
-                $deferred->resolve();
-            });
+            $promise->then(
+                static function () use ($deferred) {
+                    $deferred->resolve();
+                }
+            );
 
             $this->assertPromiseFulfillsWith($promise, 1, 1);
         } catch (Exception $exception) {
@@ -72,7 +74,7 @@ final class PromiseResolvesWithTest extends TestCase
             );
 
             $this->assertRegExp(
-                '/Promise was rejected by timeout/',
+                '/Promise was cancelled due to timeout/',
                 $exception->getMessage()
             );
         }

@@ -15,7 +15,7 @@ final class WaitForPromiseToFulfillTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject(new Exception());
-            $value = $this->waitForPromiseToFulfill($deferred->promise());
+            $this->waitForPromiseToFulfill($deferred->promise());
         } catch (Exception $exception) {
             $this->assertRegExp(
                 '/Failed to fulfill a promise. It was rejected with Exception/',

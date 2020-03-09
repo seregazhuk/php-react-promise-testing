@@ -10,7 +10,7 @@ use seregazhuk\React\PromiseTesting\TestCase;
 final class PromiseFulfillsTest extends TestCase
 {
     /** @test */
-    public function promise_fulfills()
+    public function promise_fulfills(): void
     {
         try {
             $deferred = new Deferred();
@@ -31,21 +31,21 @@ final class PromiseFulfillsTest extends TestCase
             $deferred = new Deferred();
 
             $deferred->reject();
-            $promise = resolve(3, $this->loop);
+            $promise = resolve($timeToResolve = 3, $this->eventLoop());
 
-            $promise->then(function() use ($deferred){
+            $promise->then(static function() use ($deferred) {
                 $deferred->resolve();
             });
 
             $this->assertPromiseFulfills($promise, 1);
         } catch (Exception $exception) {
             $this->assertRegExp(
-                '/Failed asserting that promise fulfills. Promise was rejected/',
+                '/Promise was cancelled due to timeout./',
                 $exception->getMessage()
             );
 
             $this->assertRegExp(
-                '/Promise was rejected by timeout/',
+                '/Promise was cancelled due to timeout/',
                 $exception->getMessage()
             );
         }

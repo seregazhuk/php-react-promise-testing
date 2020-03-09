@@ -15,6 +15,7 @@ assertions for testing ReactPHP promises.
 - [Assertions](#assertions)
     - [assertPromiseFulfills()](#assertpromisefulfills)
     - [assertPromiseFulfillsWith()](#assertpromisefulfillswith)
+    - [assertPromiseFulfillsWithInstanceOf()](#assertpromisefulfillswithinstanceof)
     - [assertPromiseRejects()](#assertpromiserejects())
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
     
@@ -33,35 +34,36 @@ The recommended way to install this library is via [Composer](https://getcompose
 See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
 
 ```
-composer require seregazhuk/react-promise-testing
+composer require seregazhuk/react-promise-testing --dev
 ```
 
 ## Quick Start
-To start using it extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
+Just extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
 which itself extends PHPUnit `TestCase`:
  
 ```php
-class MyTest extends TestCase
+final class MyTest extends TestCase
 {
     /** @test */
-    public function promise_fulfills()
+    public function promise_fulfills_with_a_response_object()
     {
-        $resolve = function(callable $resolve, callable $reject) {
-            return $resolve('Promise resolved!');
-        };
-
-        $cancel = function(callable $resolve, callable $reject) {
-            $reject(new \Exception('Promise cancelled!'));
-        };
-
-        $promise = new Promise($resolve, $cancel);
-        $this->assertPromiseFulfills($promise);
+        $browser = new Clue\React\Buzz\Browser($this->eventLoop());
+        $promise = $browser->get('http://www.google.com/');
+        $this->assertPromiseFulfillsWithInstanceOf($promise, ResponseInterface::class);
     }
 }
 
 ```
 
-Test above checks that a specified promise fulfills. If the promise rejects this test fails.
+Test above checks that a specified promise fulfills with an instance of `ResponseInterface`. 
+
+## Event loop
+
+To make promise assertions we need to run the loop. Before each test a new instance of the event loop
+is being created (inside `setUp()` method). If you need the loop to build your dependencies you **should**
+use `eventLoop()` method to retrieve it.
+
+
 
 ## Assertions
 
@@ -101,6 +103,7 @@ Failed asserting that promise fulfills. Promise was rejected.
 ```
 
 ### assertPromiseFulfillsWith()
+
 `assertPromiseFulfillsWith(PromiseInterface $promise, $value, int $timeout = null): void`
 
 The test fails if the `$promise` doesn't fulfills with a specified `$value`.
@@ -134,6 +137,42 @@ There was 1 failure:
 1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillsWithTest::promise_fulfills_with_a_specified_value
 Failed asserting that promise fulfills with a specified value. 
 Failed asserting that 1234 matches expected 1.
+```
+
+### assertPromiseFulfillsWithInstanceOf()
+
+`assertPromiseFulfillsWithInstanceOf(PromiseInterface $promise, string $class, int $timeout = null): void`
+
+The test fails if the `$promise` doesn't fulfills with an instance of specified `$class`.
+
+You can specify `$timeout` in seconds to wait for promise to be fulfilled.
+If the promise was not fulfilled in specified timeout the test fails. 
+When not specified, timeout is set to 2 seconds.
+
+```php
+final class PromiseFulfillsWithInstanceOfTest extends TestCase
+{
+    /** @test */
+    public function promise_fulfills_with_an_instance_of_class(): void
+    {
+        $deferred = new Deferred();
+        $deferred->resolve(new MyClass);
+        $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class);
+    }
+}
+```
+
+```bash
+PHPUnit 8.5.2 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 180 ms, Memory: 4.00MB
+
+There was 1 failure:
+
+1) seregazhuk\React\PromiseTesting\tests\PromiseFulfillsWithWithInstanceOfTest::promise_fulfills_with_an_instance_of_class
+Failed asserting that promise fulfills with a value of class MyClass. 
 ```
 
 ### assertPromiseRejects()
