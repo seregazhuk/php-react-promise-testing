@@ -65,6 +65,34 @@ abstract class TestCase extends PHPUnitTestCase
     }
 
     /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @throws AssertionFailedError
+     */
+    public function assertTrueAboutPromise(
+        PromiseInterface $promise, 
+        callable $predicate, 
+        int $timeout = null
+    ): void {
+        $this->assertAboutPromise($promise, $predicate, $timeout);
+    }
+
+    /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @throws AssertionFailedError
+     */
+    public function assertFalseAboutPromise(
+        PromiseInterface $promise, 
+        callable $predicate, 
+        int $timeout = null
+    ): void {
+        $this->assertAboutPromise($promise, $predicate, $timeout, false);
+    }
+
+    /**
      * @throws AssertionFailedError
      */
     public function assertPromiseFulfillsWithInstanceOf(PromiseInterface $promise, string $class, int $timeout = null): void
@@ -144,5 +172,32 @@ abstract class TestCase extends PHPUnitTestCase
     public function eventLoop(): LoopInterface
     {
         return $this->loop;
+    }
+
+    /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @param bool $assertTrue
+     * @throws AssertionFailedError
+     */
+    private function assertAboutPromise(
+        PromiseInterface $promise,
+        callable $predicate,
+        int $timeout = null,
+        bool $assertTrue = true
+    ): void {
+        $result = $assertTrue ? false : true;
+        $this->addToAssertionCount(1);
+
+        try {
+            $result = $predicate($this->waitForPromise($promise, $timeout));
+        } catch (TimeoutException $exception) {
+            $this->fail('Promise was cancelled due to timeout');
+        } catch (Exception $exception) {
+            $this->fail('Failed asserting that promise was fulfilled. Promise was rejected');
+        }
+
+        $assertTrue ? $this->assertTrue($result) : $this->assertFalse($result);
     }
 }
