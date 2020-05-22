@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.5.0 - 2020-05-22
+### Added:
+ - trait AssertsPromise
+
 ## 0.4.0 - 2020-03-09
 ### Changed:
  - TestCase is now abstract 
