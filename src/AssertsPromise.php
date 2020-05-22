@@ -10,7 +10,7 @@ use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use React\Promise\Timer\TimeoutException;
 
-trait AssertPromise
+trait AssertsPromise
 {
     protected $defaultWaitTimeout = 2;
 
