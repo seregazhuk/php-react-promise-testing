@@ -38,9 +38,10 @@ composer require seregazhuk/react-promise-testing --dev
 ```
 
 ## Quick Start
-Just extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
-which itself extends PHPUnit `TestCase`:
- 
+Use the trait `seregazhuk\React\PromiseTesting\AssertPromise` or extend your
+test classes from `seregazhuk\React\PromiseTesting\TestCase` class,
+which itself extends PHPUnit `TestCase`.
+
 ```php
 final class MyTest extends TestCase
 {
