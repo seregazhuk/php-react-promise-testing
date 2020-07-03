@@ -18,6 +18,8 @@ assertions for testing ReactPHP promises.
     - [assertPromiseFulfillsWithInstanceOf()](#assertpromisefulfillswithinstanceof)
     - [assertPromiseRejects()](#assertpromiserejects())
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
+    - [assertTrueAboutPromise](#asserttrueaboutpromise)
+    - [assertFalseAboutPromise](#assertfalseaboutpromise)
     
 - [Helpers](#helpers)
     - [waitForPromiseToFulfill()](#waitforpromisetofulfill)
@@ -267,6 +269,81 @@ Failed asserting that promise rejects with a specified reason.
 Failed asserting that LogicException Object (...) is an instance of class "InvalidArgumentException".
 ```
 
+### assertTrueAboutPromise()
+`assertTrueAboutPromise(PromiseInterface $promise, callable $predicate, int $timeout = null): void`
+
+The test fails if the value encapsulated in the Promise does not conform to an arbitrary predicate.
+
+You can specify `$timeout` in seconds to wait for promise to be resolved.
+If the promise was not fulfilled in specified timeout, it rejects with `React\Promise\Timer\TimeoutException`. 
+When not specified, timeout is set to 2 seconds.
+
+```php
+final class AssertTrueAboutPromiseTest extends TestCase
+{
+    /** @test */
+    public function promise_encapsulates_integer(): void
+    {
+        $deferred = new Deferred();
+        $deferred->resolve(23);
+
+        $this->assertTrueAboutPromise($deferred->promise(), function ($val) {
+            return is_object($val);
+        });
+    }
+}
+```
+
+```bash
+PHPUnit 8.5.2 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 136 ms, Memory: 4.00MB
+
+There was 1 failure:
+
+1) seregazhuk\React\PromiseTesting\tests\AssertTrueAboutPromiseTest::promise_encapsulates_integer
+Failed asserting that false is true.
+```
+
+### assertFalseAboutPromise()
+`assertFalseAboutPromise(PromiseInterface $promise, callable $predicate, int $timeout = null): void`
+
+The test fails if the value encapsulated in the Promise conforms to an arbitrary predicate.
+
+You can specify `$timeout` in seconds to wait for promise to be resolved.
+If the promise was not fulfilled in specified timeout, it rejects with `React\Promise\Timer\TimeoutException`. 
+When not specified, timeout is set to 2 seconds.
+
+```php
+final class AssertFalseAboutPromiseTest extends TestCase
+{
+    /** @test */
+    public function promise_encapsulates_object(): void
+    {
+        $deferred = new Deferred();
+        $deferred->resolve(23);
+
+        $this->assertFalseAboutPromise($deferred->promise(), function ($val) {
+            return is_int($val);
+        });
+    }
+}
+```
+
+```bash
+PHPUnit 8.5.2 by Sebastian Bergmann and contributors.
+
+F                                                                   1 / 1 (100%)
+
+Time: 136 ms, Memory: 4.00MB
+
+There was 1 failure:
+
+1) seregazhuk\React\PromiseTesting\tests\AssertFalseAboutPromiseTest::promise_encapsulates_object
+Failed asserting that true is false.
+```
 
 ## Helpers
 

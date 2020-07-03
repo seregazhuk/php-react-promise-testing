@@ -143,4 +143,59 @@ trait AssertsPromise
 
         return $this->loop;
     }
+
+    /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @throws AssertionFailedError
+     */
+    public function assertTrueAboutPromise(
+        PromiseInterface $promise,
+        callable $predicate,
+        int $timeout = null
+    ): void {
+        $this->assertAboutPromise($promise, $predicate, $timeout);
+    }
+
+    /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @throws AssertionFailedError
+     */
+    public function assertFalseAboutPromise(
+        PromiseInterface $promise,
+        callable $predicate,
+        int $timeout = null
+    ): void {
+        $this->assertAboutPromise($promise, $predicate, $timeout, false);
+    }
+
+    /**
+     * @param PromiseInterface $promise
+     * @param callable $predicate
+     * @param int|null $timeout
+     * @param bool $assertTrue
+     * @throws AssertionFailedError
+     */
+    private function assertAboutPromise(
+        PromiseInterface $promise,
+        callable $predicate,
+        int $timeout = null,
+        bool $assertTrue = true
+    ): void {
+        $result = $assertTrue ? false : true;
+        $this->addToAssertionCount(1);
+
+        try {
+            $result = $predicate($this->waitForPromise($promise, $timeout));
+        } catch (TimeoutException $exception) {
+            $this->fail('Promise was cancelled due to timeout');
+        } catch (Exception $exception) {
+            $this->fail('Failed asserting that promise was fulfilled. Promise was rejected');
+        }
+
+        $assertTrue ? $this->assertTrue($result) : $this->assertFalse($result);
+    }
 }
