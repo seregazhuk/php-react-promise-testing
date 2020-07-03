@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.6.0 - 2020-07-03
+### Added:
+ - New assertions `assertTrueAboutPromise()` and `assertFalseAboutPromise()` (#21 by @ace411) 
+
 ## 0.5.0 - 2020-05-22
 ### Added:
  - trait `AssertsPromise`
