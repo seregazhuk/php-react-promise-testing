@@ -5,6 +5,7 @@ Under the hood uses [clue/php-block-react](https://github.com/clue/php-block-rea
 [![Build Status](https://travis-ci.org/seregazhuk/php-react-promise-testing.svg?branch=master)](https://travis-ci.org/seregazhuk/php-react-promise-testing)
 [![Maintainability](https://api.codeclimate.com/v1/badges/689230cdae09d2e32600/maintainability)](https://codeclimate.com/github/seregazhuk/php-react-promise-testing/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/689230cdae09d2e32600/test_coverage)](https://codeclimate.com/github/seregazhuk/php-react-promise-testing/test_coverage)
+[![Total Downloads](https://poser.pugx.org/seregazhuk/react-promise-testing/downloads)](//packagist.org/packages/seregazhuk/react-promise-testing)
 
 When testing asynchronous code and promises things can be a bit tricky. This library provides a set of convenient 
 assertions for testing ReactPHP promises. 
