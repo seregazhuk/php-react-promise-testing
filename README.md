@@ -18,8 +18,8 @@ assertions for testing ReactPHP promises.
     - [assertPromiseFulfillsWithInstanceOf()](#assertpromisefulfillswithinstanceof)
     - [assertPromiseRejects()](#assertpromiserejects())
     - [assertPromiseRejectsWith()](#assertpromiserejectswith)
-    - [assertTrueAboutPromise](#asserttrueaboutpromise)
-    - [assertFalseAboutPromise](#assertfalseaboutpromise)
+    - [assertTrueAboutPromise()](#asserttrueaboutpromise)
+    - [assertFalseAboutPromise()](#assertfalseaboutpromise)
     
 - [Helpers](#helpers)
     - [waitForPromiseToFulfill()](#waitforpromisetofulfill)
