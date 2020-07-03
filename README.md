@@ -40,9 +40,10 @@ composer require seregazhuk/react-promise-testing --dev
 ```
 
 ## Quick Start
-Just extend your test classes from `seregazhuk\React\PromiseTesting\TestCase` class, 
-which itself extends PHPUnit `TestCase`:
- 
+Use the trait `seregazhuk\React\PromiseTesting\AssertsPromise` or extend your
+test classes from `seregazhuk\React\PromiseTesting\TestCase` class,
+which itself extends PHPUnit `TestCase`.
+
 ```php
 final class MyTest extends TestCase
 {
@@ -54,7 +55,27 @@ final class MyTest extends TestCase
         $this->assertPromiseFulfillsWithInstanceOf($promise, ResponseInterface::class);
     }
 }
+```
 
+Using the trait:
+
+```php
+
+use PHPUnit\Framework\TestCase;
+use seregazhuk\React\PromiseTesting\AssertsPromise;
+
+final class MyTest extends TestCase
+{
+    use AssertsPromise;
+
+    /** @test */
+    public function promise_fulfills_with_a_response_object()
+    {
+        $browser = new Clue\React\Buzz\Browser($this->eventLoop());
+        $promise = $browser->get('http://www.google.com/');
+        $this->assertPromiseFulfillsWithInstanceOf($promise, ResponseInterface::class);
+    }
+}
 ```
 
 Test above checks that a specified promise fulfills with an instance of `ResponseInterface`. 
