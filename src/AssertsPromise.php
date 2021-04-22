@@ -107,6 +107,8 @@ trait AssertsPromise
             $this->assertInstanceOf(
                 $reasonExceptionClass, $reason, 'Failed asserting that promise rejects with a specified reason.'
             );
+
+            return;
         }
 
         $this->fail('Failed asserting that promise rejects. Promise was fulfilled.');

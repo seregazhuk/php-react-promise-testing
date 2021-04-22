@@ -13,8 +13,8 @@ final class PromiseRejectsWithTest extends TestCase
     {
         try {
             $deferred = new Deferred();
-            $deferred->reject(new \LogicException());
-            $this->assertPromiseRejectsWith($deferred->promise(), \InvalidArgumentException::class);
+            $deferred->reject(new \InvalidArgumentException());
+            $this->assertPromiseRejectsWith($deferred->promise(), \LogicException::class);
         } catch (Exception $exception) {
             $this->assertMatchesRegularExpression('/Failed asserting that promise rejects with a specified reason/', $exception->getMessage());
             $this->assertMatchesRegularExpression(
