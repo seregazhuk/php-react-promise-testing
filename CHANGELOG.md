@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.6.1 - 2021-04-22
+### Fixed:
+- False positive `assertPromiseRejectsWith()`
+
+
 ## 0.6.0 - 2020-07-03
 ### Added:
  - New assertions `assertTrueAboutPromise()` and `assertFalseAboutPromise()` (#21 by @ace411) 
