@@ -17,7 +17,7 @@ final class PromiseFulfillsTest extends TestCase
             $deferred->reject();
             $this->assertPromiseFulfills($deferred->promise(), 1);
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that promise fulfills. Promise was rejected/',
                 $exception->getMessage()
             );
@@ -39,12 +39,12 @@ final class PromiseFulfillsTest extends TestCase
 
             $this->assertPromiseFulfills($promise, 1);
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Promise was cancelled due to timeout./',
                 $exception->getMessage()
             );
 
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Promise was cancelled due to timeout/',
                 $exception->getMessage()
             );

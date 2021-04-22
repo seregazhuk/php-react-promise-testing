@@ -16,7 +16,7 @@ final class PromiseRejectsTest extends TestCase
             $deferred->resolve();
             $this->assertPromiseRejects($deferred->promise());
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that promise rejects. Promise was fulfilled/',
                 $exception->getMessage()
             );

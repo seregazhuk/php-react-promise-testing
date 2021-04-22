@@ -16,8 +16,8 @@ final class PromiseRejectsWithTest extends TestCase
             $deferred->reject(new \LogicException());
             $this->assertPromiseRejectsWith($deferred->promise(), \InvalidArgumentException::class);
         } catch (Exception $exception) {
-            $this->assertRegExp('/Failed asserting that promise rejects with a specified reason/', $exception->getMessage());
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression('/Failed asserting that promise rejects with a specified reason/', $exception->getMessage());
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that LogicException Object .+ is an instance of class "InvalidArgumentException"/',
                 $exception->getMessage()
             );
