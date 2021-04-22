@@ -17,12 +17,12 @@ final class PromiseFulfillsWithInstanceOfTest extends TestCase
             $deferred->resolve(new MyClass());
             $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class, 1);
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that .+ matches expected .+/',
                 $exception->getMessage()
             );
@@ -38,12 +38,12 @@ final class PromiseFulfillsWithInstanceOfTest extends TestCase
             $deferred->reject();
             $this->assertPromiseFulfillsWithInstanceOf($deferred->promise(), MyClass::class, 1);
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Promise was rejected/',
                 $exception->getMessage()
             );
@@ -67,12 +67,12 @@ final class PromiseFulfillsWithInstanceOfTest extends TestCase
 
             $this->assertPromiseFulfillsWithInstanceOf($promise, MyClass::class, 1);
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that promise fulfills with a value of class ' . preg_quote(MyClass::class, '/') .'/',
                 $exception->getMessage()
             );
 
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Promise was cancelled due to timeout/',
                 $exception->getMessage()
             );

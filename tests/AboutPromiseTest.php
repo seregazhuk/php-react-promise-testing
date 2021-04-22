@@ -30,7 +30,7 @@ final class AboutPromiseTest extends TestCase
 
             $this->assertTrueAboutPromise($thd->promise(), 'is_string');
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that .+/',
                 $exception->getMessage()
             );
@@ -59,7 +59,7 @@ final class AboutPromiseTest extends TestCase
 
             $this->assertFalseAboutPromise($thd->promise(), 'is_int');
         } catch (Exception $exception) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '/Failed asserting that .+/',
                 $exception->getMessage()
             );

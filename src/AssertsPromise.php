@@ -12,7 +12,7 @@ use React\Promise\Timer\TimeoutException;
 
 trait AssertsPromise
 {
-    protected $defaultWaitTimeout = 2;
+    protected int $defaultWaitTimeout = 2;
 
     private $loop;
 

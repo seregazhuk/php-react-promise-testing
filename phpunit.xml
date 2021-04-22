@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
->
-    <testsuites>
-        <testsuite name="ReactPHP Promise Testing Test Suite">
-            <directory suffix=".php">./tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./src/</directory>
-        </whitelist>
-    </filter>
-    <logging>
-        <log type="coverage-clover" target="./build/logs/clover.xml"/>
-        <log type="coverage-html" target="./build/logs/report"
-             lowUpperBound="50" highLowerBound="80"/>
-    </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">./src/</directory>
+    </include>
+    <report>
+      <clover outputFile="./build/logs/clover.xml"/>
+      <html outputDirectory="./build/logs/report" lowUpperBound="50" highLowerBound="80"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="ReactPHP Promise Testing Test Suite">
+      <directory suffix=".php">./tests/</directory>
+    </testsuite>
+  </testsuites>
+  <logging/>
 </phpunit>
