@@ -105,7 +105,9 @@ trait AssertsPromise
             $this->waitForPromise($promise, $timeout);
         } catch (Exception $reason) {
             $this->assertInstanceOf(
-                $reasonExceptionClass, $reason, 'Failed asserting that promise rejects with a specified reason.'
+                $reasonExceptionClass,
+                $reason,
+                'Failed asserting that promise rejects with a specified reason.'
             );
 
             return;
