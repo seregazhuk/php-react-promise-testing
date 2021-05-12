@@ -29,7 +29,7 @@ assertions for testing ReactPHP promises.
 ## Installation
 
 ### Dependencies
-Library requires PHP 7.3.0 or above.
+Library requires PHP 8.0 or above.
 
 The recommended way to install this library is via [Composer](https://getcomposer.org). 
 [New to Composer?](https://getcomposer.org/doc/00-intro.md)
