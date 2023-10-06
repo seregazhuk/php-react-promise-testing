@@ -5,7 +5,7 @@ namespace seregazhuk\React\PromiseTesting;
 use Clue\React\Block;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use React\Promise\Timer\TimeoutException;
@@ -28,9 +28,9 @@ trait AssertsPromise
 
         try {
             $this->waitForPromise($promise, $timeout);
-        } catch (TimeoutException $exception) {
+        } catch (TimeoutException) {
             $this->fail($failMessage . 'Promise was cancelled due to timeout.');
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
     }
@@ -41,7 +41,7 @@ trait AssertsPromise
      * @param int|null $timeout
      * @throws AssertionFailedError
      */
-    public function assertPromiseFulfillsWith(PromiseInterface $promise, $value, int $timeout = null): void
+    public function assertPromiseFulfillsWith(PromiseInterface $promise, mixed $value, int $timeout = null): void
     {
         $failMessage = 'Failed asserting that promise fulfills with a specified value. ';
         $result = null;
@@ -49,9 +49,9 @@ trait AssertsPromise
 
         try {
             $result = $this->waitForPromise($promise, $timeout);
-        } catch (TimeoutException $exception) {
+        } catch (TimeoutException) {
             $this->fail($failMessage . 'Promise was cancelled due to timeout.');
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
 
@@ -69,9 +69,9 @@ trait AssertsPromise
 
         try {
             $result = $this->waitForPromise($promise, $timeout);
-        } catch (TimeoutException $exception) {
+        } catch (TimeoutException) {
             $this->fail($failMessage . 'Promise was cancelled due to timeout.');
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->fail($failMessage . 'Promise was rejected.');
         }
 
@@ -89,7 +89,7 @@ trait AssertsPromise
 
         try {
             $this->waitForPromise($promise, $timeout);
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return;
         }
 
@@ -115,10 +115,11 @@ trait AssertsPromise
     }
 
     /**
-     * @throws Exception
+     * @param PromiseInterface $promise
+     * @param int|null $timeout
      * @return mixed
      */
-    public function waitForPromiseToFulfill(PromiseInterface $promise, int $timeout = null)
+    public function waitForPromiseToFulfill(PromiseInterface $promise, int $timeout = null): mixed
     {
         try {
             return $this->waitForPromise($promise, $timeout);
@@ -129,10 +130,12 @@ trait AssertsPromise
     }
 
     /**
+     * @param PromiseInterface $promise
+     * @param int|null $timeout
      * @return mixed
      * @throws Exception
      */
-    public function waitForPromise(PromiseInterface $promise, int $timeout = null)
+    public function waitForPromise(PromiseInterface $promise, int $timeout = null): mixed
     {
         return Block\await($promise, $this->eventLoop(), $timeout ?: $this->defaultWaitTimeout);
     }
@@ -140,7 +143,7 @@ trait AssertsPromise
     public function eventLoop(): LoopInterface
     {
         if (! $this->loop) {
-            $this->loop = LoopFactory::create();
+            $this->loop = Loop::get();
         }
 
         return $this->loop;
@@ -154,9 +157,10 @@ trait AssertsPromise
      */
     public function assertTrueAboutPromise(
         PromiseInterface $promise,
-        callable $predicate,
-        int $timeout = null
-    ): void {
+        callable         $predicate,
+        int              $timeout = null
+    ): void
+    {
         $this->assertAboutPromise($promise, $predicate, $timeout);
     }
 
@@ -168,9 +172,10 @@ trait AssertsPromise
      */
     public function assertFalseAboutPromise(
         PromiseInterface $promise,
-        callable $predicate,
-        int $timeout = null
-    ): void {
+        callable         $predicate,
+        int              $timeout = null
+    ): void
+    {
         $this->assertAboutPromise($promise, $predicate, $timeout, false);
     }
 
@@ -183,18 +188,19 @@ trait AssertsPromise
      */
     private function assertAboutPromise(
         PromiseInterface $promise,
-        callable $predicate,
-        int $timeout = null,
-        bool $assertTrue = true
-    ): void {
+        callable         $predicate,
+        int              $timeout = null,
+        bool             $assertTrue = true
+    ): void
+    {
         $result = $assertTrue ? false : true;
         $this->addToAssertionCount(1);
 
         try {
             $result = $predicate($this->waitForPromise($promise, $timeout));
-        } catch (TimeoutException $exception) {
+        } catch (TimeoutException) {
             $this->fail('Promise was cancelled due to timeout');
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->fail('Failed asserting that promise was fulfilled. Promise was rejected');
         }
 
